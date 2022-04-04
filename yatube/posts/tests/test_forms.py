@@ -73,20 +73,21 @@ class PostFormCreateTest(TestCase):
         if self.post.text == 'Тестовый текст3':
             post_id = self.post.pk
         response = self.authorized_client.get(
-            reverse('posts:post_detail', kwargs={'post_id': post_id}))
+           reverse('posts:post_detail', kwargs={'post_id': post_id}))
         self.assertEqual = (self.post.author, {self.user_with_post})
         self.assertEqual = (self.post.text, 'Тестовый текст3')
         self.assertEqual = (self.group.title, 'group_form')
         # редактирование поста
-        form_data_new = {
+        form_data = {
             'text': 'Тестовый текст3 edited',
             'group': self.group.pk
         }
         response = self.authorized_client.post(
             reverse('posts:post_edit', kwargs={'post_id': post_id}),
-            data=form_data_new,
+            data=form_data,
             follow=True
         )
+        self.post_1 = response.context
         self.assertEqual = (self.post.text, 'Тестовый текст3 edited')
         self.assertEqual = (self.group.title, 'group_form')
         self.assertTrue(
