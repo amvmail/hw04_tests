@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    {% load static %}
+    {% include "includes/header.html" %}
+  </head>
+  <body>
+    <header>
+    </header>
+    <main>
+      <div class="container py-5"> 
+      {% block content %}
+        Нет сообщений
+      {% endblock %}
+    </div>
+    </main>
+    <footer 
+      {% include "includes/footer.html" %}
+    </footer>
+  </body>

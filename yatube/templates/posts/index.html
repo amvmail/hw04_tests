@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+  <head>
+    <title><h3>Проект yatube</h3></title>
+    {% load static %}
+  </head>
+      {% block content %}
+        <h1>Последние обновления на сайте</h1>
+          {% for post in page_obj %}
+            <article>
+            <ul>
+              <li>
+                Автор: {{ post.author }}
+              </li>
+              <li>
+                Дата публикации: {{ post.pub_date|date:"d E Y" }}
+              </li>
+            </ul>
+            <p>{{ post.text }}</p>
+            </article>
+            {% if post.group %}
+            <!-- кнопка все записи группы -->
+            <a class="btn btn-sm text-muted"   
+              <a href="{% url 'posts:group_posts' post.group.slug %}"
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary"
+                >Все записи группы
+                </button>
+              </a>
+              <!-- конец кнопки все записи группы -->
+            {% endif %}
+            <!-- кнопка все записи автора -->
+            <a class="btn btn-sm text-muted"   
+              <a href="{% url 'posts:profile' post.author %}"
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary"
+                >Все записи автора
+                </button>
+              </a>
+              <!-- конец кнопки все записи автора -->
+              <!-- кнопка просмотра поста -->
+            <a class="btn btn-sm text-muted"   
+            <a href="{% url 'posts:post_detail' post_id=post.id %}"
+            <div class="col-md-6 offset-md-4">
+              <button type="submit" class="btn btn-primary"
+              >Подробная информация
+              </button>
+            </a>
+            <!-- конец кнопки просмотра поста -->
+            {% if not forloop.last %}<hr>{% endif %}
+          {% endfor %}
+          {% include 'posts/includes/paginator.html' %}  
+      {% endblock %}
+    

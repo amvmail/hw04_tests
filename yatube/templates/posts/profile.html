@@ -1,0 +1,69 @@
+<!-- yatube/templates/posts/profile.html -->
+{% extends 'base.html' %}
+{% block title %}  
+  <head>
+    {% load static %}
+    {% load user_filters %}
+  </head>
+  {% endblock %}  
+      {% block content %}
+      <div class="container py-5">
+        <h1> Все посты пользователя {{ author }}</h1>
+        <h3> Всего постов: {{posts.count }} </h3>   
+        <article>
+        {% for post in page_obj %}
+          <br>
+          <ul>
+            <li> Автор: {{ post.author }} </li>
+              {% if post.author %}
+              <li class="list-group-item">
+                <!-- кнопка Все посты пользователя -->
+              <a class="btn btn-sm text-muted"   
+              <a href="{% url 'posts:profile' username=post.author.username %}"
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary"
+                >Все посты пользователя
+                </button>
+              </a>
+              <!-- конец кнопки Все посты пользователя -->
+              {% endif %}
+              </li>  
+            <li>
+              Дата публикации: {{post.pub_date|date:"d E Y"}} 
+            </li>
+          </ul>
+          <p>{{ post.text }}</p>
+          <li>
+            <li class="list-group-item">
+              <!-- кнопка подробная информация -->
+            <a class="btn btn-sm text-muted"   
+            <a href="{% url 'posts:post_detail' post_id=post.id %}"
+            <div class="col-md-6 offset-md-4">
+              <button type="submit" class="btn btn-primary"
+              >Подробная информация
+              </button>
+            </a>
+            <!-- конец кнопки подробная информация -->
+            </li>
+        </article>
+        {% if post.group %}
+        <li class="list-group-item">
+          <!-- кнопка все записи группы -->
+          <a class="btn btn-sm text-muted"   
+          <a href="{% url 'posts:group_posts' post.group.slug %}"
+          <div class="col-md-6 offset-md-4">
+            <button type="submit" class="btn btn-primary"
+            >Все записи группы
+            </button>
+          </a>
+          <!-- конец кнопки все записи группы -->
+        </li>
+        {% else %}
+          <br/>
+          <p> У поста нет соответствующей группы </p>
+          <br/>
+        {% endif%}          
+        {% endfor %}
+        {% include 'posts/includes/paginator.html' %}
+      </div>
+  {% endblock %}

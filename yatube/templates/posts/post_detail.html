@@ -1,0 +1,69 @@
+<!-- yatube/templates/posts/post_detail.html -->
+{% extends 'base.html' %}
+<head>
+    <title><h3>Проект yatube</h3></title>
+    {% load static %}
+    {% load user_filters %}
+</head>
+      {% block content %}
+      {% block title %}<h2> Пост </h2>
+      {{ detail_post.text|truncatewords:30 }} {% endblock %}
+        <br> <br> <br>
+        <div class="row">
+        <aside class="col-12 col-md-3">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Дата публикации: {{ detail_post.pub_date|date:"d E Y" }} 
+            </li>
+            <li class="list-group-item">
+            {% if user == detail_post.author %}
+            <!-- кнопка редактировать -->
+            <a class="btn btn-sm text-muted"   
+            <a href="{% url 'posts:post_edit' post_id=detail_post.id %}"
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary"
+                >Редактировать
+                </button>
+              </a>
+              <!-- конец кнопки редактирование -->
+              {% endif %}
+              {% if detail_post.group.slug %}
+              <li class="list-group-item">
+              Группа: {{ detail_post.group.title }}
+              <br>
+              <!-- кнопка все записи группы -->
+              <a class="btn btn-sm text-muted"   
+              <a href="{% url 'posts:group_posts' detail_post.group.slug %}"
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary"
+                >Все записи группы
+                </button>
+              </a>
+              <!-- конец кнопки все записи группы -->
+              {% endif %}
+            </li>
+              <li class="list-group-item">
+                Автор: {{ detail_post.author }}
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+              Всего постов автора:  <span >{{ post_count }}</span>
+            </li>
+            <li class="list-group-item">
+              <!-- кнопка Все посты пользователя -->
+              <a class="btn btn-sm text-muted"   
+              <a href="{% url 'posts:profile' detail_post.author %}"
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary"
+                >Все посты пользователя
+                </button>
+              </a>
+              <!-- конец кнопки Все посты пользователя -->
+              </li>
+          </ul>
+        </aside>
+        <article class="col-12 col-md-9">
+          <p> {{detail_post.text}} </p>
+          
+        </article>
+      </div> 
+      {% endblock %}
