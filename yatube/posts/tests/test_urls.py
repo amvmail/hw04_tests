@@ -1,12 +1,8 @@
 # posts/tests/test_urls.py
-# import unittest
 from http import HTTPStatus
 
-from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
-from posts.models import Post, Group
-
-User = get_user_model()
+from posts.models import Post, Group, User
 
 
 class PostURLTests(TestCase):
@@ -29,7 +25,6 @@ class PostURLTests(TestCase):
         self.guest_client = Client()
         # Создаем пользователя
         self.user = User.objects.create_user(username='test')
-        # Создаем второй клиент
         self.authorized_client = Client()
         # Авторизуем пользователя
         self.authorized_client.force_login(self.user)

@@ -3,14 +3,11 @@
 import shutil
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase
 from django.urls import reverse
 from posts.forms import PostForm
-from posts.models import Group, Post
-
-User = get_user_model()
+from posts.models import Group, Post, User
 
 
 class PostFormCreateTest(TestCase):
@@ -60,7 +57,7 @@ class PostFormCreateTest(TestCase):
         test_author_1 = User.objects.get(username='testusername')
         test_group_1 = Group.objects.get(pk=1)
 
-        self.assertEqual(test_post_1.text, 'Тестовый текст4')
+        self.assertEqual(test_post_1.text, form_data['text'])
         self.assertEqual(str(test_author_1), 'testusername')
         self.assertEqual(str(test_group_1), 'group_form')
         self.assertEqual(Post.objects.count(), posts_count + 1,
@@ -89,7 +86,7 @@ class PostFormCreateTest(TestCase):
             follow=True
         )
         self.post_1 = response.context
-        self.assertEqual = (self.post.text, 'Тестовый текст3 edited')
+        self.assertEqual = (self.post.text, form_data['text'])
         self.assertEqual = (self.group.title, 'group_form')
         self.assertTrue(
             Post.objects.filter(
@@ -145,6 +142,6 @@ class PostFormCreateTest(TestCase):
         self.assertEqual(Post.objects.count(), count_posts + 1)
         self.assertRedirects(response, (reverse(
             'posts:profile', kwargs={'username': 'testusername'})), 302)
-        self.assertEqual(test_post_2.text, 'Пост с image')
+        self.assertEqual(test_post_2.text, form_data['text'])
         self.assertEqual(test_author.username, 'testusername')
         self.assertEqual(test_group.title, 'group_form')
