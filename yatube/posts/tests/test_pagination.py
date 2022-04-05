@@ -6,6 +6,7 @@ from posts.models import Post, Group, User
 QUANT_OF_POSTS: int = 10
 QUANT_OF_POSTS_HALF: int = 5
 
+
 class PaginatorViewsTest(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -38,7 +39,8 @@ class PaginatorViewsTest(TestCase):
             reverse('posts:profile', kwargs={'username': 'testusername'})}
         for test_url in urls_names:
             response = self.client.get(test_url)
-            self.assertEqual(len(response.context.get("page_obj")), QUANT_OF_POSTS)
+            self.assertEqual(len(
+                response.context.get("page_obj")), QUANT_OF_POSTS)
 
     def test_second_page_contains_three_records(self):
         """Проверка paginator - 5 постов 2 страница."""
@@ -48,4 +50,5 @@ class PaginatorViewsTest(TestCase):
             reverse('posts:profile', kwargs={'username': 'testusername'})}
         for test_url in urls_names:
             response = self.client.get(test_url + '?page=2')
-            self.assertEqual(len(response.context.get("page_obj")), QUANT_OF_POSTS_HALF)
+            self.assertEqual(len(
+                response.context.get("page_obj")), QUANT_OF_POSTS_HALF)
