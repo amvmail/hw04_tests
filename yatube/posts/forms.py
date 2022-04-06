@@ -11,6 +11,7 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         # fields = ('text', 'image', 'group')  # из спринта 6
+        fields = ('text', 'group')
         text = forms.CharField(label='Текст поста')
         # image = forms.ImageField(label='Изображение') # из спринта 6
         group = forms.CharField(label='Наименование группы')
