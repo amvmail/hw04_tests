@@ -10,9 +10,9 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('text', 'image', 'group')
+        # fields = ('text', 'image', 'group')  # из спринта 6
         text = forms.CharField(label='Текст поста')
-        image = forms.ImageField(label='Изображение')
+        # image = forms.ImageField(label='Изображение') # из спринта 6
         group = forms.CharField(label='Наименование группы')
 
     # Валидация поля slug
