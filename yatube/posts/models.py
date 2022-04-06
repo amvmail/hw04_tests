@@ -30,7 +30,7 @@ class Post(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='posts', # было поправлено с qroups
+        related_name='posts',  # было поправлено с qroups
         verbose_name='Группа',
         help_text='Выберите группу'
     )
@@ -40,6 +40,7 @@ class Post(models.Model):
         null=True,  # оставить необязательность поля
         blank=True
     )
+
     # Аргумент upload_to указывает директорию,
     # в которую будут загружаться пользовательские файлы.
     class Meta:
