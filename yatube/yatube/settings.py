@@ -12,6 +12,7 @@ SECRET_KEY = '5u^cn)wt#j)qh!)y6w3#okt@tx+8zk&e$co4hsbg=@5yh(%_%d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 # ALLOWED_HOSTS = ['localhost']
 ALLOWED_HOSTS = [
@@ -20,6 +21,8 @@ ALLOWED_HOSTS = [
     '[::1]',
     'testserver',
 ]
+
+CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 
 # Application definition
 
@@ -34,6 +37,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',  # Мое добавленное приложение 2
     'core.apps.CoreConfig',  # Мое добавленное приложение 3
     'about.apps.AboutConfig',  # Мое добавленное приложение 4
+    'sorl.thumbnail',  # Для работы с изображениями
 ]
 
 MIDDLEWARE = [
@@ -130,3 +134,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

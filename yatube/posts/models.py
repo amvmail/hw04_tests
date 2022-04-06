@@ -30,14 +30,22 @@ class Post(models.Model):
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='qroups'
+        related_name='posts', # было поправлено с qroups
+        verbose_name='Группа',
+        help_text='Выберите группу'
     )
     image = models.ImageField(
-        null=True,
-        blank=True)
-
+        'Картинка',
+        upload_to='posts/',
+        null=True,  # оставить необязательность поля
+        blank=True
+    )
+    # Аргумент upload_to указывает директорию,
+    # в которую будут загружаться пользовательские файлы.
     class Meta:
         ordering = ['-pub_date']
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
 
     def __str__(self):
-        return self.text
+        return self.text[:15]

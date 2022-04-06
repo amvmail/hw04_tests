@@ -1,10 +1,8 @@
 # posts/tests/test_pagination.py
+from posts.posts_global import QUANT_OF_POSTS, QUANT_OF_POSTS_HALF
 from django.test import Client, TestCase
 from django.urls import reverse
 from posts.models import Post, Group, User
-
-QUANT_OF_POSTS: int = 10
-QUANT_OF_POSTS_HALF: int = 5
 
 
 class PaginatorViewsTest(TestCase):
@@ -27,7 +25,6 @@ class PaginatorViewsTest(TestCase):
 
     def setUp(self):
         self.guest_client = Client()
-        self.user = User.objects.create_user(username='Test')
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
 
@@ -42,7 +39,7 @@ class PaginatorViewsTest(TestCase):
             self.assertEqual(len(
                 response.context.get("page_obj")), QUANT_OF_POSTS)
 
-    def test_second_page_contains_three_records(self):
+    def test_second_page_contains_five_records(self):
         """Проверка paginator - 5 постов 2 страница."""
         urls_names = {
             reverse('posts:posts'),

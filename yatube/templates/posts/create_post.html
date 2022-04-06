@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
+{% load thumbnail %}
 {% if is_edit %}
   Редактирование поста
 {% else %}
@@ -26,6 +27,7 @@
                   <form method="POST" action="{% url 'posts:post_create' %}">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
                   {% endif %}
+
                   <div class="form-group row my-3 p-3">
                     <label for="id_text">
                       Текст поста                  
@@ -34,13 +36,17 @@
                     <textarea name="text" cols="40" rows="10" class="form-control" required id="id_text">
                     </textarea>                
                     <small id="id_text-help" class="form-text text-muted">
+                    <form method="post" enctype="multipart/form-data">  <!-- csrf_token -->
+                      {% csrf_token %}  <!-- csrf_token -->
+                      {% for field in form %}  <!-- csrf_token -->
                       {% if is_edit %}
                         Редактирование поста
                       {% else %}
                         Текст нового поста
                       {% endif %}
-                    </small>                  
-                  </div>            
+                      {% endfor %}  <!-- csrf_token -->
+                    </small>
+                  </div>
                   <div class="form-group row my-3 p-3">
                     <label for="id_group">
                       Group                  
@@ -64,6 +70,7 @@
                       {% endif %}
                       </button>
                   </div>
+
                 </form>
               </div>
             </div>

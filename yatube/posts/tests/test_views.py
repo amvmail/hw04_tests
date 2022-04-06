@@ -23,12 +23,10 @@ class PostViewsTests(TestCase):
     def setUp(self):
         # Создаем неавторизованный клиент
         self.guest_client = Client()
-        # Создаем пользователя
-        self.user = User.objects.create_user(username='test')
         # Создаем второй клиент
         self.authorized_client = Client()
         # Авторизуем пользователя
-        self.authorized_client.force_login(self.user)
+        self.authorized_client.force_login(self.user_with_post)
 
     def test_pages_users_correct_template(self):
         """Проверка URL-адреса на использование соответствующего шаблона."""
@@ -37,7 +35,7 @@ class PostViewsTests(TestCase):
             'posts/group_list.html': reverse(
                 'posts:group_posts', kwargs={'slug': '99'}),
             'posts/profile.html': reverse(
-                'posts:profile', kwargs={'username': 'test'}),
+                'posts:profile', kwargs={'username': 'testusername'}),
             'posts/post_detail.html': (
                 reverse('posts:post_detail',
                         kwargs={'post_id': self.post.pk})),

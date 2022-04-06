@@ -11,6 +11,7 @@ from posts.models import Group, Post, User
 
 
 class PostFormCreateTest(TestCase):
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
