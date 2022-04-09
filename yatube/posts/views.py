@@ -3,9 +3,11 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from posts.posts_global import QUANT_OF_POSTS
+import shutil
+from django.core.files.uploadedfile import SimpleUploadedFile
 
-from .forms import PostForm
-from .models import Group, Post, User
+from .forms import PostForm, CommentForm
+from .models import Group, Post, User, Comment
 
 
 def authorized_only(func):
@@ -72,9 +74,13 @@ def post_detail(request, post_id):
     detail_post = get_object_or_404(Post, id=post_id)
     post_count = Post.objects.filter(author=detail_post.author).count()
     template = 'posts/post_detail.html'
+    form = CommentForm(request.POST or None)
+    comments = Comment.objects.filter(post=detail_post)
     context = {
         'post_count': post_count,
         'detail_post': detail_post,
+        'comments': comments,
+        'form': form,
     }
     return render(request, template, context)
 
@@ -85,7 +91,6 @@ def post_create(request):
     form = PostForm(request.POST or None, files=request.FILES or None)
     if form.is_valid():
         post = form.save(commit=False)
-        post.text = form.cleaned_data['text']
         post.author = request.user
         form.save()
         return redirect('posts:profile', username=request.user)
@@ -112,3 +117,15 @@ def post_edit(request, post_id):
         'is_edit': is_edit,
     }
     return render(request, 'posts/create_post.html', context)
+
+
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.author = request.user
+        comment.post = post
+        comment.save()
+    return redirect('posts:post_detail', post_id=post_id)

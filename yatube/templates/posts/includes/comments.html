@@ -1,0 +1,42 @@
+<!-- yatube/templates/posts/includes/comments.html -->
+<head>
+    <title><h3>Проект yatube. Комментарии</h3></title>
+    {% load user_filters %}
+    {% load thumbnail %}
+</head>
+  {% if user.is_authenticated %}
+  <div class="card my-4">
+    <h5 class="card-header">Добавить комментарий:</h5>
+    <div class="card-body">
+      <form method="POST" action="{% url 'posts:add_comment' post_id=detail_post.id %}">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+        <div class="form-group mb-2">
+          <textarea name="text" cols="40" rows="10" class="form-control" required id="id_text">
+          </textarea>
+          <small id="id_text-help" class="form-text text-muted">
+          Текст комментария
+        </div>
+        <!-- кнопка отправки комментария -->
+                <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary"
+                  >Отправить
+                </button>
+        <!-- конец кнопки все записи автора -->
+      </form>
+    </div>
+  </div>
+  {% endif %}
+{% for comment in comments %}
+  <div class="media mb-4">
+    <div class="media-body">
+      <h5 class="mt-0">
+        <a href="{% url 'posts:profile' comment.author.username %}">
+          {{ comment.author.username }}
+        </a>
+      </h5>
+        <p>
+         {{ comment.text }}
+        </p>
+      </div>
+    </div>
+{% endfor %}

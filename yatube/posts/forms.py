@@ -1,19 +1,17 @@
 # yatube/users/form.py
 from django import forms
 from django.core.exceptions import ValidationError
-# from pytils.translit import slugify  # взято из теории
 from django.utils.text import slugify  # взято из инета
 
-from .models import Post
+from .models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        # fields = ('text', 'image', 'group')  # из спринта 6
-        fields = ('text', 'group')
-        text = forms.CharField(label='Текст поста')
-        # image = forms.ImageField(label='Изображение') # из спринта 6
+        fields = ('text', 'group', 'image')
+        text = forms.CharField(label='Текст поста'),
+        image = forms.ImageField(label='Изображение'),
         group = forms.CharField(label='Наименование группы')
 
     # Валидация поля slug
@@ -30,3 +28,10 @@ class PostForm(forms.ModelForm):
                 'придумайте уникальное значение'
             )
         return slug
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('text',)
+        text = forms.CharField(label='Текст комментария')

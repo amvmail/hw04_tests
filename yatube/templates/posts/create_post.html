@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}
 {% load thumbnail %}
+{% load user_filters %}
 {% if is_edit %}
   Редактирование поста
 {% else %}
@@ -17,34 +18,36 @@
                   Редактировать
                 {% else %}
                   Добавить запись
-                {% endif %}       
+                {% endif %}
               </div>
               <div class="card-body">
                   {% if is_edit %}
-                  <form method="POST" action="{% url 'posts:post_edit' post_id %}">
+                    <form method="POST" enctype="multipart/form-data" action="{% url 'posts:post_edit' post_id %}">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                    {% csrf_token %}  <!-- csrf_token -->
+                    {% for field in form %}  <!-- csrf_token -->
+					{% endfor %}  <!-- csrf_token -->
                   {% else %}
-                  <form method="POST" action="{% url 'posts:post_create' %}">
+                  <form method="POST" enctype="multipart/form-data" action="{% url 'posts:post_create' %}">
                     <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                    {% csrf_token %}  <!-- csrf_token -->
+                    {% for field in form %}  <!-- csrf_token -->
+					{% endfor %}  <!-- csrf_token -->
                   {% endif %}
-
                   <div class="form-group row my-3 p-3">
-                    <label for="id_text">
-                      Текст поста                  
-                      <span class="required text-danger" >* Обязательно для заполнения</span>                  
+                    <label for="{{ PostForm.text.id_text }}">
+                      {{ PostForm.text.label }}
+                      <span class="required text-danger" >* Обязательно для заполнения</span>
                     </label>
-                    <textarea name="text" cols="40" rows="10" class="form-control" required id="id_text">
-                    </textarea>                
+                    <textarea name="text" cols="40" rows="10" class="form-control" required id="id_text"
+                        {{ form.text }}
+                    </textarea>
                     <small id="id_text-help" class="form-text text-muted">
-                    <form method="post" enctype="multipart/form-data">  <!-- csrf_token -->
-                      {% csrf_token %}  <!-- csrf_token -->
-                      {% for field in form %}  <!-- csrf_token -->
                       {% if is_edit %}
                         Редактирование поста
                       {% else %}
                         Текст нового поста
                       {% endif %}
-                      {% endfor %}  <!-- csrf_token -->
                     </small>
                   </div>
                   <div class="form-group row my-3 p-3">
@@ -61,6 +64,12 @@
                       Группа, к которой будет относиться пост
                     </small>
                   </div>
+                    <div class="form-group row my-3 p-3">
+                    <label for="id_image">
+                      Картинка
+                    </label>
+                    <input type="file" name="image" accept="image/*" class="form-control" id="id_image">
+                    </div>
                   <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">
                       {% if is_edit %}
@@ -69,6 +78,7 @@
                         Добавить
                       {% endif %}
                       </button>
+
                   </div>
 
                 </form>

@@ -4,6 +4,7 @@
   <head>
     {% load static %}
     {% load user_filters %}
+    {% load thumbnail %}
   </head>
   {% endblock %}  
       {% block content %}
@@ -32,6 +33,9 @@
               Дата публикации: {{post.pub_date|date:"d E Y"}} 
             </li>
           </ul>
+          {% thumbnail post.image "960x550" crop="center" upscale=True as im %}
+            <img class="card-img my-2" src="{{ im.url }}">
+            {% endthumbnail %}
           <p>{{ post.text }}</p>
           <li>
             <li class="list-group-item">

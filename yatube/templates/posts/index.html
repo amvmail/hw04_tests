@@ -2,6 +2,7 @@
   <head>
     <title><h3>Проект yatube</h3></title>
     {% load static %}
+    {% load thumbnail %}
   </head>
       {% block content %}
         <h1>Последние обновления на сайте</h1>
@@ -15,6 +16,9 @@
                 Дата публикации: {{ post.pub_date|date:"d E Y" }}
               </li>
             </ul>
+            {% thumbnail post.image "960x550" crop="center" upscale=True as im %}
+            <img class="card-img my-2" src="{{ im.url }}">
+            {% endthumbnail %}
             <p>{{ post.text }}</p>
             </article>
             {% if post.group %}
