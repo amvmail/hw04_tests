@@ -33,7 +33,7 @@ pip/
 .git/
 pip/cache/
 .github/
-/yatube/media/
+yatube/media/
 tests/
 
 # PyInstaller
