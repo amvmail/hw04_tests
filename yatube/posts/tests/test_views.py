@@ -118,7 +118,6 @@ class PostViewsTests(TestCase):
         self.post = Post.objects.create(
             text='Тестовый текст2',
             author=self.user_with_post,
-            # title='group_test'
         )
         self.group = Group.objects.create(
             title='group_test',

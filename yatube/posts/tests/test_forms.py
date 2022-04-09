@@ -6,8 +6,8 @@ from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase
 from django.urls import reverse
-from posts.forms import PostForm
-from posts.models import Group, Post, User
+from posts.forms import PostForm, CommentForm
+from posts.models import Group, Post, User, Comment
 
 
 class PostFormCreateTest(TestCase):

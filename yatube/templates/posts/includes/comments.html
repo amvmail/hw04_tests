@@ -11,7 +11,7 @@
       <form method="POST" action="{% url 'posts:add_comment' post_id=detail_post.id %}">
         <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
         <div class="form-group mb-2">
-          <textarea name="text" cols="40" rows="10" class="form-control" required id="id_text">
+          <textarea name="text" cols="10" rows="3" class="form-control" required id="id_text">
           </textarea>
           <small id="id_text-help" class="form-text text-muted">
           Текст комментария
